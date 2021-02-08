@@ -1,0 +1,33 @@
+#Retrieve the price of bitcoin in usd and chf. Give the value of your portfolio based on how many coins you have. Also calculate the profit or loss based on your unit cost
+
+#Libraries
+
+import requests
+import json
+from currency_converter import CurrencyConverter
+
+#API call
+
+url = "https://api.coindesk.com/v1/bpi/currentprice.json"
+response = requests.get(url)
+data = response.json()
+bitcoin_USD = data["bpi"]["USD"]["rate_float"]
+
+#Converter
+
+c = CurrencyConverter()
+
+bitcoin_value_CHF = c.convert(bitcoin_USD, "USD","CHF")
+
+number_of_BTC_you_have = 0.04605082
+
+your_bitcoin = number_of_BTC_you_have * bitcoin_value_CHF
+price_you_paid = 1546.8624
+
+profit = your_bitcoin - price_you_paid
+
+
+print(f"Bitcoin price in USD is {bitcoin_USD:.2f}")
+print(f"Bitcoin price in CHF is {bitcoin_value_CHF:.2f}")
+print(f"The value of your portfolio is {your_bitcoin:.2f}")
+print(f"Your profit or loss is {profit:.2f}")
